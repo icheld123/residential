@@ -1,0 +1,26 @@
+<div class="contenedor">
+
+    <div class="row">
+        <div class="col-md-12">
+             <canvas id="draw-canvas" #canvasElement width="620" height="360">
+                 No tienes un buen navegador.
+             </canvas>
+         </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <input type="button" class="button" id="draw-submitBtn" (click)="generarImagen()"  value="Enviar Imagen">
+            <input type="button" class="button" id="draw-clearBtn" (click)="limpiarEspacioFirma()" value="Borrar Canvas">
+
+        </div>
+
+    </div>
+
+    <br/>
+    <div class="row">
+        <div class="col-md-12">
+            <textarea id="draw-dataUrl" class="form-control" rows="5" [value] = urlImg>Para los que saben que es esto:</textarea>
+        </div>
+    </div>
+    <br/>
+</div>
