@@ -1,11 +1,12 @@
 import { HttpHeaders } from '@angular/common/http';
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { DataService } from '../../shared/service/data.service';
 import { Identification } from '../../shared/models/identifications.model';
 import { Employee } from '../../shared/models/employees.model';
 import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs';
 import { Person } from '../../shared/models/person.model';
+import { NgSelectComponent } from '@ng-select/ng-select';
 
 @Component({
   selector: 'app-reception-form',
@@ -13,13 +14,14 @@ import { Person } from '../../shared/models/person.model';
   styleUrl: './reception-form.component.css'
 })
 export class ReceptionFormComponent {
+  @ViewChild('ngSelect') ngSelect!: NgSelectComponent;
   public employeeNameControl = new FormControl();
   public filteredEmployees: Employee[] = [];
   public isActive!: string;
   public formAplicacion!: FormGroup;
   public searchControl = new FormControl();
   public mostrarForm: boolean = true;
-  reqFieldName: string = '';
+  reqFieldName: string = "*Este campo es requerido";
   nameFieldValid: string = '';
   phoneFieldName: string = '';
   phoneFieldValid: string = '';
@@ -32,6 +34,7 @@ export class ReceptionFormComponent {
   identifications: Identification[] = [];
   employees: Employee[] = [];
   people: Person[] = [];
+  peopleLoading = false;
 
   constructor(private dataService: DataService){
     this.construirFormulario();
@@ -46,8 +49,7 @@ export class ReceptionFormComponent {
     this.formAplicacion = new FormGroup({
       companyName: new FormControl("", [Validators.required, Validators.minLength(6)]),
       employeeName: new FormControl("", [Validators.required, Validators.minLength(6)]),
-      personaDestinoField: new FormControl("", [Validators.required, Validators.minLength(6)]),
-      personaDestinoSearch: new FormControl("", []),
+      personaDestino: new FormControl("", [Validators.required, Validators.minLength(6)]),
       firstName: new FormControl("", [Validators.required, Validators.minLength(6)]),
       secondName: new FormControl("", [Validators.required, Validators.minLength(6)]),
       middleName: new FormControl("", [Validators.required, Validators.minLength(6)]),
@@ -62,16 +64,15 @@ export class ReceptionFormComponent {
 
   get emailField() { return this.formAplicacion.get('email'); }
   get medioPreferidoField() { return this.formAplicacion.get('medioPreferido'); }
-  get companyName() { return this.formAplicacion.get('companyName'); }
-  get employeeName() { return this.formAplicacion.get('employeeName'); }
-  get personaDestinoField() { return this.formAplicacion.get('personaDestinoField'); }
-  get personaDestinoSearch() { return this.formAplicacion.get('personaDestinoSearch'); }
-  get firstName() { return this.formAplicacion.get('firstName'); }
-  get secondName() { return this.formAplicacion.get('secondName'); }
-  get middleName() { return this.formAplicacion.get('middleName'); }
-  get lastName() { return this.formAplicacion.get('lastName'); }
+  get companyNameField() { return this.formAplicacion.get('companyName'); }
+  get employeeNameField() { return this.formAplicacion.get('employeeName'); }
+  get personaDestinoField() { return this.formAplicacion.get('personaDestino'); }
+  get firstNameField() { return this.formAplicacion.get('firstName'); }
+  get secondNameField() { return this.formAplicacion.get('secondName'); }
+  get middleNameField() { return this.formAplicacion.get('middleName'); }
+  get lastNameField() { return this.formAplicacion.get('lastName'); }
   get telefonoField() { return this.formAplicacion.get('telefono'); }
-  get idNumber() { return this.formAplicacion.get('idNumber'); }
+  get idNumberField() { return this.formAplicacion.get('idNumber'); }
 
 
   ngOnInit(){
@@ -79,6 +80,7 @@ export class ReceptionFormComponent {
     this.getIdTypeList(this.userName, this.password);
     this.getEmployees(this.userName, this.password);
     this.getPerson(this.userName, this.password)
+
   }
 
   getIdTypeList(user: string, password: string){
@@ -123,13 +125,9 @@ export class ReceptionFormComponent {
     );
   }
 
-  searchPersona(event: Event) {
-    const inputElement = event.target as HTMLInputElement;
-    const searchTerm = inputElement.value.trim();
-    console.log('buscando para: ', searchTerm);
-    this.dataService.getPersonById(this.userName, this.password,searchTerm).subscribe(data => {
+  searchPersona(searchTerm: string) {
+    this.dataService.getPersonById(this.userName, this.password, searchTerm).subscribe(data => {
       this.people = data;
-      console.log('personas cargadas:', this.people);
     });
   }
 
@@ -145,5 +143,21 @@ export class ReceptionFormComponent {
       this.selectedPersonaName = '';
     }
   }
-  
+
+  onSearch(event: { term: string; items: any[] }) {
+    this.searchPersona(event.term);
+    // Aquí puedes hacer cualquier validación o lógica que necesites
+  }
+
+  onClose(event: Event){
+    this.people = [];
+  }
+
+  onSelect(selectedValue: any) {
+    console.log('Valor seleccionado:', selectedValue);
+    console.log("is valid: " + this.personaDestinoField!.valid)
+    console.log("is requerid: " + this.personaDestinoField!.errors?.['required'])
+    console.log(this.personaDestinoField)
+    // Aquí puedes implementar la lógica adicional que necesites
+  }
 }
