@@ -14,6 +14,8 @@ import { WebcamComponent } from './feature/webcam/webcam.component';
 import { SignatureComponent } from './feature/signature/signature.component';
 import { ReceptionFormComponent } from './feature/reception-form/reception-form.component';
 import { DeliveryFormComponent } from './feature/delivery-form/delivery-form.component';
+import { NgSelectModule } from '@ng-select/ng-select';
+import { NgOptionHighlightModule } from '@ng-select/ng-option-highlight';
 
 @NgModule({
   declarations: [
@@ -23,6 +25,8 @@ import { DeliveryFormComponent } from './feature/delivery-form/delivery-form.com
     ReceptionFormComponent,
     DeliveryFormComponent  ],
   imports: [
+    NgSelectModule,
+    NgOptionHighlightModule,
     BrowserModule,
     AppRoutingModule,
     WebcamModule,

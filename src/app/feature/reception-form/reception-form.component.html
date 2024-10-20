@@ -12,11 +12,11 @@
               name="companyName"
               formControlName="companyName"
               class="form-control"
-              [class.is-valid]="companyName!.valid"
-              [class.is-invalid]="companyName!.touched && !companyName!.valid">
-            <div class="mensaje-error" *ngIf="!companyName!.valid && (companyName!.dirty || companyName!.touched)">
-              <div *ngIf="companyName!.errors?.['required']">{{ reqFieldName }}</div>
-              <div *ngIf="companyName!.errors?.['stringValid']">{{ nameFieldValid }}</div>
+              [class.is-valid]="companyNameField!.valid"
+              [class.is-invalid]="companyNameField!.touched && !companyNameField!.valid">
+            <div class="mensaje-error" *ngIf="!companyNameField!.valid && (companyNameField!.dirty || companyNameField!.touched)">
+              <div *ngIf="companyNameField!.errors?.['required']">{{ reqFieldName }}</div>
+              <div *ngIf="companyNameField!.errors?.['stringValid']">{{ nameFieldValid }}</div>
             </div>
           </div>
           <div class="flex-fill ms-2">
@@ -26,46 +26,35 @@
                 {{ employee.name }} {{ employee.lastname }}
               </option>
             </select>
-            <div class="mensaje-error" *ngIf="!employeeName!.valid && (employeeName!.dirty || employeeName!.touched)">
-              <div *ngIf="employeeName!.errors?.['required']">{{ reqFieldName }}</div>
-              <div *ngIf="employeeName!.errors?.['stringValid']">{{ nameFieldValid }}</div>
+            <div class="mensaje-error" *ngIf="!employeeNameField!.valid && (employeeNameField!.dirty || employeeNameField!.touched)">
+              <div *ngIf="employeeNameField!.errors?.['required']">{{ reqFieldName }}</div>
+              <div *ngIf="employeeNameField!.errors?.['stringValid']">{{ nameFieldValid }}</div>
             </div>
           </div>
         </div>
 
-        <div class="input-text">
-          <!-- <mat-form-field class="input-text">
-            <mat-label>Persona Destino</mat-label>
-            <input matInput placeholder="Buscar persona por identificación" formControlName="personaDestino" (input)="searchPersona($event)">
-            <mat-select formControlName="personaDestino" (selectionChange)="onPersonaSelect($event)">
-              <mat-option *ngFor="let person of people" [value]="person.idNumber">
-                {{ person.firstName }} {{ person.lastName }}
-              </mat-option>
-            </mat-select>
-            <div class="mensaje-error" *ngIf="!personaDestinoField?.valid && (personaDestinoField?.dirty || personaDestinoField?.touched)">
-              <div *ngIf="personaDestinoField?.errors?.['required']">Este campo es requerido</div>
-            </div>
-          </mat-form-field> -->
-
-           <mat-form-field>
-            <mat-select formControlName="personaDestinoField" placeholder="Bank">
-              <mat-option>
-                <ngx-mat-select-search formControlName="personaDestinoSearch" ></ngx-mat-select-search>
-              </mat-option>
-              <mat-option *ngFor="let person of people" [value]="person.idNumber">
-                {{ person.firstName }} {{ person.lastName }}
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
-<!--
-          <mat-form-field>
-            <mat-label>Nombre Completo</mat-label>
-            <input 
-              matInput 
-              [value]="selectedPersonaName" 
-              readonly 
-            />
-          </mat-form-field> -->
+        <div class="form-group">
+          <label for="personaDestino">Persona destino: </label><br>
+          <ng-select
+            #ngSelect
+            [items]="people"
+            bindLabel="idNumber"
+            [loading]="peopleLoading"
+            [virtualScroll]="true"
+            placeholder="Digite la cédula"
+            (search)="onSearch($event)"
+            (close)="onClose($event)"
+            (change)="onSelect($event)"
+            formControlName="personaDestino"
+            [class.is-valid]="personaDestinoField!.valid"
+            [class.is-invalid]="personaDestinoField!.touched && !personaDestinoField!.valid">
+            <ng-template ng-option-tmp let-item="item" let-search="searchTerm">
+              <small> {{ item.idNumber }} | <b>Nombre:</b> {{ item.firstName }} {{ item.lastName }}</small>
+            </ng-template>
+          </ng-select>
+          <div class="mensaje-error" *ngIf="!personaDestinoField!.valid && (personaDestinoField!.dirty || personaDestinoField!.touched)">
+            <div *ngIf="personaDestinoField!.errors?.['required']">{{ reqFieldName }}</div>
+          </div>
         </div>
 
         <div class="form-group">
@@ -87,11 +76,11 @@
             name="firstName"
             formControlName="firstName"
             class="form-control"
-            [class.is-valid]="firstName!.valid"
-            [class.is-invalid]="firstName!.touched && !firstName!.valid">
-          <div class="mensaje-error" *ngIf="!firstName!.valid && (firstName!.dirty || firstName!.touched)">
-            <div *ngIf="firstName!.errors?.['required']">{{ reqFieldName }}</div>
-            <div *ngIf="firstName!.errors?.['stringValid']">{{ nameFieldValid }}</div>
+            [class.is-valid]="firstNameField!.valid"
+            [class.is-invalid]="firstNameField!.touched && !firstNameField!.valid">
+          <div class="mensaje-error" *ngIf="!firstNameField!.valid && (firstNameField!.dirty || firstNameField!.touched)">
+            <div *ngIf="firstNameField!.errors?.['required']">{{ reqFieldName }}</div>
+            <div *ngIf="firstNameField!.errors?.['stringValid']">{{ nameFieldValid }}</div>
           </div>
         </div>
 
@@ -102,11 +91,11 @@
             name="secondName"
             formControlName="secondName"
             class="form-control"
-            [class.is-valid]="secondName!.valid"
-            [class.is-invalid]="secondName!.touched && !secondName!.valid">
-          <div class="mensaje-error" *ngIf="!secondName!.valid && (secondName!.dirty || secondName!.touched)">
-            <div *ngIf="secondName!.errors?.['required']">{{ reqFieldName }}</div>
-            <div *ngIf="secondName!.errors?.['stringValid']">{{ nameFieldValid }}</div>
+            [class.is-valid]="secondNameField!.valid"
+            [class.is-invalid]="secondNameField!.touched && !secondNameField!.valid">
+          <div class="mensaje-error" *ngIf="!secondNameField!.valid && (secondNameField!.dirty || secondNameField!.touched)">
+            <div *ngIf="secondNameField!.errors?.['required']">{{ reqFieldName }}</div>
+            <div *ngIf="secondNameField!.errors?.['stringValid']">{{ nameFieldValid }}</div>
           </div>
         </div>
 
@@ -117,11 +106,11 @@
             name="middleName"
             formControlName="middleName"
             class="form-control"
-            [class.is-valid]="middleName!.valid"
-            [class.is-invalid]="middleName!.touched && !middleName!.valid">
-          <div class="mensaje-error" *ngIf="!middleName!.valid && (middleName!.dirty || middleName!.touched)">
-            <div *ngIf="middleName!.errors?.['required']">{{ reqFieldName }}</div>
-            <div *ngIf="middleName!.errors?.['stringValid']">{{ nameFieldValid }}</div>
+            [class.is-valid]="middleNameField!.valid"
+            [class.is-invalid]="middleNameField!.touched && !middleNameField!.valid">
+          <div class="mensaje-error" *ngIf="!middleNameField!.valid && (middleNameField!.dirty || middleNameField!.touched)">
+            <div *ngIf="middleNameField!.errors?.['required']">{{ reqFieldName }}</div>
+            <div *ngIf="middleNameField!.errors?.['stringValid']">{{ nameFieldValid }}</div>
           </div>
         </div>
 
@@ -132,11 +121,11 @@
             name="lastName"
             formControlName="lastName"
             class="form-control"
-            [class.is-valid]="lastName!.valid"
-            [class.is-invalid]="lastName!.touched && !lastName!.valid">
-          <div class="mensaje-error" *ngIf="!lastName!.valid && (lastName!.dirty || lastName!.touched)">
-            <div *ngIf="lastName!.errors?.['required']">{{ reqFieldName }}</div>
-            <div *ngIf="lastName!.errors?.['stringValid']">{{ nameFieldValid }}</div>
+            [class.is-valid]="lastNameField!.valid"
+            [class.is-invalid]="lastNameField!.touched && !lastNameField!.valid">
+          <div class="mensaje-error" *ngIf="!lastNameField!.valid && (lastNameField!.dirty || lastNameField!.touched)">
+            <div *ngIf="lastNameField!.errors?.['required']">{{ reqFieldName }}</div>
+            <div *ngIf="lastNameField!.errors?.['stringValid']">{{ nameFieldValid }}</div>
           </div>
         </div>
 
@@ -156,11 +145,11 @@
             name="idNumber"
             formControlName="idNumber"
             class="form-control"
-            [class.is-valid]="idNumber!.valid"
-            [class.is-invalid]="idNumber!.touched && !idNumber!.valid">
-          <div class="mensaje-error" *ngIf="!idNumber!.valid && (idNumber!.dirty || idNumber!.touched)">
-            <div *ngIf="idNumber!.errors?.['required']">{{ reqFieldName }}</div>
-            <div *ngIf="idNumber!.errors?.['min']">{{ idNumberValid }}</div>
+            [class.is-valid]="idNumberField!.valid"
+            [class.is-invalid]="idNumberField!.touched && !idNumberField!.valid">
+          <div class="mensaje-error" *ngIf="!idNumberField!.valid && (idNumberField!.dirty || idNumberField!.touched)">
+            <div *ngIf="idNumberField!.errors?.['required']">{{ reqFieldName }}</div>
+            <div *ngIf="idNumberField!.errors?.['min']">{{ idNumberValid }}</div>
           </div>
         </div>
 
