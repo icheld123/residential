@@ -1,14 +1,14 @@
 import { HttpHeaders } from '@angular/common/http';
 import { Component, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { DataService } from '../../shared/service/data.service';
-import { Identification } from '../../shared/models/identifications.model';
-import { Employee } from '../../shared/models/employees.model';
+import { DataService } from '../../../shared/service/data.service';
+import { Identification } from '../../../shared/models/identifications.model';
+import { Employee } from '../../../shared/models/employees.model';
 import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs';
-import { Person } from '../../shared/models/person.model';
+import { Person } from '../../../shared/models/person.model';
 import { NgSelectComponent } from '@ng-select/ng-select';
-import { Sector } from '../../shared/models/sector.model';
-import { Unit } from '../../shared/models/unit.model';
+import { Sector } from '../../../shared/models/sector.model';
+import { Unit } from '../../../shared/models/unit.model';
 import { NgToastService } from 'ng-angular-popup';
 
 @Component({
@@ -84,17 +84,6 @@ export class ReceptionFormComponent {
     });
   }
 
-  goToNextPage() {
-    if (this.currentPage < 3) {
-      this.currentPage++;
-    }
-  }
-
-  goToPreviousPage() {
-    if (this.currentPage > 1) {
-      this.currentPage--;
-    }
-  }
 
   updateFieldValidators(exists: boolean) {
     if (!exists) {

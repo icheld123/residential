@@ -16,11 +16,11 @@
   
   <div class="snapshot text-center mb-4" *ngIf="webcamImage">
     <h2>Fotografía tomada:</h2>
-    <img [src]="webcamImage.imageAsDataUrl" height="300" width="400"/>
+    <img [src]="webcamImage?.imageAsDataUrl" height="300" width="400"/>
   </div>
   
-  <h4 *ngIf="errors.length > 0">Messages:</h4>
+  <!-- <h4 *ngIf="errors.length > 0">Messages:</h4>
   <ul *ngFor="let error of errors">
     <li>{{error | json}}</li>
-  </ul>
+  </ul> -->
   
