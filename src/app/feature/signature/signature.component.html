@@ -1,25 +1,23 @@
 <div class="contenedor">
-
+    <h4 class="text-center">Registre su firma:</h4>
     <div class="row">
-        <div class="col-md-12">
-             <canvas id="draw-canvas" #canvasElement width="620" height="360">
+        <div class="col-md-12 text-center">
+             <canvas id="draw-canvas" #canvasElement width="500" height="360" style="border:1px solid #000000;">
                  No tienes un buen navegador.
              </canvas>
          </div>
     </div>
     <div class="row">
-        <div class="col-md-12">
-            <input type="button" class="button" id="draw-submitBtn" (click)="generarImagen()"  value="Enviar Imagen">
-            <input type="button" class="button" id="draw-clearBtn" (click)="limpiarEspacioFirma()" value="Borrar Canvas">
-
+        <div class="col-md-12 text-center">
+            <button type="button" class="btn btn-warning m-4" id="draw-submitBtn" (click)="generarImagen()"  value="Enviar Imagen">Enviar firma</button>
+            <button type="button" class="btn btn-secondary m-4" id="draw-clearBtn" (click)="limpiarEspacioFirma()" value="Borrar Canvas">Borrar firma</button>
         </div>
-
     </div>
-
     <br/>
     <div class="row">
         <div class="col-md-12">
-            <textarea id="draw-dataUrl" class="form-control" rows="5" [value] = urlImg>Para los que saben que es esto:</textarea>
+            <h4 class="text-center text-success" *ngIf="urlImg">Firma guardada</h4>
+            <!-- <textarea id="draw-dataUrl" class="form-control" rows="5" [value] = urlImg>Para los que saben que es esto:</textarea> -->
         </div>
     </div>
     <br/>
