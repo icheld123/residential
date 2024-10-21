@@ -1,0 +1,224 @@
+<section id="contacto">
+  <div data-aos="zoom-in" data-aos-duration="2000" data-aos-once="true">
+    <h2 class="text-center mt-4 mb-2 text-uppercase">Registro de recepción de paquete</h2>
+    <div class="contenedor-form p-2 bg-light">
+      <form id="form-aplicacion" *ngIf="mostrarForm" [formGroup]="formAplicacion" #myForm="ngForm">
+        <div class="form-group d-flex justify-content-between">
+          <div class="flex-fill me-2">
+            <label for="companyName">Empresa que entrega: </label><br>
+            <input
+              type="text"
+              name="companyName"
+              formControlName="companyName"
+              class="form-control"
+              [class.is-valid]="companyNameField!.valid"
+              [class.is-invalid]="companyNameField!.touched && !companyNameField!.valid">
+            <div class="mensaje-error" *ngIf="!companyNameField!.valid && (companyNameField!.dirty || companyNameField!.touched)">
+              <div *ngIf="companyNameField!.errors?.['required']">{{ reqFieldName }}</div>
+              <div *ngIf="companyNameField!.errors?.['stringValid']">{{ nameFieldValid }}</div>
+            </div>
+          </div>
+          <div class="flex-fill me-2">
+            <label for="employeeName">Empleado que recibe: </label><br>
+            <ng-select
+              #ngSelect
+              [items]="employees"
+              bindLabel="identification"
+              [loading]="employeesLoading"
+              [virtualScroll]="true"
+              placeholder="Digite la cédula"
+              (search)="onSearchEmployee($event)"
+              (close)="onCloseEmployee($event)"
+              (change)="onSelectEmployee($event)"
+              formControlName="employeeName"
+              [class.is-valid]="employeeNameField!.valid"
+              [class.is-invalid]="employeeNameField!.touched && !employeeNameField!.valid">
+              <ng-template ng-option-tmp let-item="item" let-search="searchTerm">
+                <small> {{ item.identification }} | {{ item.name }} {{ item.lastname }}</small>
+              </ng-template>
+            </ng-select>
+            <div class="mensaje-error" *ngIf="!employeeNameField!.valid && (employeeNameField!.dirty || employeeNameField!.touched)">
+              <div *ngIf="employeeNameField!.errors?.['required']">{{ reqFieldName }}</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="personaDestino">Persona destino: </label><br>
+          <ng-select [readonly]="destinataryExistsField!.value == false"
+            #ngSelect
+            [items]="people"
+            bindLabel="idNumber"
+            [loading]="peopleLoading"
+            [virtualScroll]="true"
+            placeholder="Digite la cédula"
+            (search)="onSearchPerson($event)"
+            (close)="onClosePerson($event)"
+            (change)="onSelectPerson($event)"
+            formControlName="personaDestino"
+            [class.is-valid]="personaDestinoField!.valid"
+            [class.is-invalid]="personaDestinoField!.touched && !personaDestinoField!.valid">
+            <ng-template ng-option-tmp let-item="item" let-search="searchTerm">
+              <small> {{ item.idNumber }} | <b>Nombre:</b> {{ item.firstName }} {{ item.firstLastName }}</small>
+            </ng-template>
+          </ng-select>
+          <div class="mensaje-error" *ngIf="!personaDestinoField!.valid && (personaDestinoField!.dirty || personaDestinoField!.touched)">
+            <div *ngIf="personaDestinoField!.errors?.['required']">{{ reqFieldName }}</div>
+          </div>
+        </div>
+
+        <div class="form-group d-flex justify-content-between">
+          <div class="flex-fill me-2">
+            <label>Sector: </label><br>
+            <select name="sectors" id="sectors" formControlName="sectorDestinatary">
+              <option *ngFor="let sector of sectors" [value]="sector.id" >{{ sector.id }}</option>
+            </select>
+          </div>
+  
+          <div class="flex-fill me-2">
+            <label>Unidad: </label><br>
+            <select name="units" id="units" formControlName="unitDestinatary">
+              <option *ngFor="let unit of units" [value]="unit.valor_unidad">{{ unit.valor_unidad }}</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <p>¿El destinatario ya está registrado?</p>
+          <div class="">
+            <input type="radio" id="si" formControlName="destinataryExists" [value]=true>
+            <label for="si">SI</label><br>
+            <input type="radio" id="no" formControlName="destinataryExists" [value]=false>
+            <label for="no">NO</label><br>
+          </div>
+        </div>
+
+        <div *ngIf="destinataryExistsField!.value == false">
+          <p>Datos de destinatario:</p>
+
+          <div class="form-group">
+            <label for="firstName">Primer nombre:</label>
+            <input
+              type="text"
+              name="firstName"
+              formControlName="firstName"
+              class="form-control"
+              [class.is-valid]="firstNameField!.valid"
+              [class.is-invalid]="firstNameField!.touched && !firstNameField!.valid">
+            <div class="mensaje-error" *ngIf="!firstNameField!.valid && (firstNameField!.dirty || firstNameField!.touched)">
+              <div *ngIf="firstNameField!.errors?.['required']">{{ reqFieldName }}</div>
+              <div *ngIf="firstNameField!.errors?.['stringValid']">{{ nameFieldValid }}</div>
+            </div>
+          </div>
+  
+          <div class="form-group">
+            <label for="secondName">Segundo nombre:</label>
+            <input
+              type="text"
+              name="secondName"
+              formControlName="secondName"
+              class="form-control"
+              [class.is-valid]="secondNameField!.valid"
+              [class.is-invalid]="secondNameField!.touched && !secondNameField!.valid">
+            <div class="mensaje-error" *ngIf="!secondNameField!.valid && (secondNameField!.dirty || secondNameField!.touched)">
+              <div *ngIf="secondNameField!.errors?.['required']">{{ reqFieldName }}</div>
+              <div *ngIf="secondNameField!.errors?.['stringValid']">{{ nameFieldValid }}</div>
+            </div>
+          </div>
+  
+          <div class="form-group">
+            <label for="middleName">Primer apellido:</label>
+            <input
+              type="text"
+              name="middleName"
+              formControlName="middleName"
+              class="form-control"
+              [class.is-valid]="middleNameField!.valid"
+              [class.is-invalid]="middleNameField!.touched && !middleNameField!.valid">
+            <div class="mensaje-error" *ngIf="!middleNameField!.valid && (middleNameField!.dirty || middleNameField!.touched)">
+              <div *ngIf="middleNameField!.errors?.['required']">{{ reqFieldName }}</div>
+              <div *ngIf="middleNameField!.errors?.['stringValid']">{{ nameFieldValid }}</div>
+            </div>
+          </div>
+  
+          <div class="form-group">
+            <label for="lastName">Segundo apellido:</label>
+            <input
+              type="text"
+              name="lastName"
+              formControlName="lastName"
+              class="form-control"
+              [class.is-valid]="lastNameField!.valid"
+              [class.is-invalid]="lastNameField!.touched && !lastNameField!.valid">
+            <div class="mensaje-error" *ngIf="!lastNameField!.valid && (lastNameField!.dirty || lastNameField!.touched)">
+              <div *ngIf="lastNameField!.errors?.['required']">{{ reqFieldName }}</div>
+              <div *ngIf="lastNameField!.errors?.['stringValid']">{{ nameFieldValid }}</div>
+            </div>
+          </div>
+  
+          <div class="form-group">
+            <label for="idType">Tipo de identificación:</label>
+            <select class="form-control" formControlName="idType" name="idType">
+              <option *ngFor="let idType of identifications" [value]="idType.id">
+                {{ idType.idType }} - {{ idType.nombre }}
+              </option>
+            </select>
+          </div>
+  
+          <div class="form-group">
+            <label for="idNumber">Número de documento:</label>
+            <input
+              type="number"
+              name="idNumber"
+              formControlName="idNumber"
+              class="form-control"
+              [class.is-valid]="idNumberField!.valid"
+              [class.is-invalid]="idNumberField!.touched && !idNumberField!.valid">
+            <div class="mensaje-error" *ngIf="!idNumberField!.valid && (idNumberField!.dirty || idNumberField!.touched)">
+              <div *ngIf="idNumberField!.errors?.['required']">{{ reqFieldName }}</div>
+              <div *ngIf="idNumberField!.errors?.['min']">{{ idNumberValid }}</div>
+              <div *ngIf="idNumberField!.errors?.['max']">{{ idNumberValid }}</div>
+            </div>
+          </div>
+  
+          <div class="form-group">
+            <label for="telefono">Teléfono:</label>
+            <input
+              type="number"
+              name="telefono"
+              formControlName="telefono"
+              class="form-control"
+              [class.is-valid]="telefonoField!.valid"
+              [class.is-invalid]="telefonoField!.touched && !telefonoField!.valid">
+            <div class="mensaje-error" *ngIf="!telefonoField!.valid && (telefonoField!.dirty || telefonoField!.touched)">
+              <div *ngIf="telefonoField!.errors?.['required']">{{ reqFieldName }}</div>
+              <div *ngIf="telefonoField!.errors?.['min']">{{ phoneFieldValid }}</div>
+            </div>
+          </div>
+  
+          <div class="form-group">
+            <label for="email">Correo:</label>
+            <input
+              type="email"
+              name="email"
+              formControlName="email"
+              class="form-control"
+              [class.is-valid]="emailField!.valid"
+              [class.is-invalid]="emailField!.touched && !emailField!.valid">
+            <div class="mensaje-error" *ngIf="!emailField!.valid && (emailField!.dirty || emailField!.touched)">
+              <div *ngIf="emailField!.errors?.['required']">{{ reqFieldName }}</div>
+              <div *ngIf="emailField!.errors?.['email']">{{ reqFieldName }}</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="d-flex justify-content-end">
+          <button type="submit" class="btn btn-success m-2" (click)="onSubmit()">Enviar</button>
+        </div>
+
+      </form>
+    </div>
+
+    <!-- <h2 *ngIf="!mostrarForm" style="text-align: center;">{{responseField}}</h2> -->
+  </div>
+</section>

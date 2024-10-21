@@ -1,5 +1,6 @@
 export class Employee{
-    identification: BigInt;
+    employeeId: number;
+    identification: string;
     name: string;
     lastname: string;
 }

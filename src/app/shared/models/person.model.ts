@@ -1,13 +1,13 @@
 import { Identification } from "./identifications.model";
 
 export class Person{
-    idNum: BigInt;
+    idNum: string;
     firstName: string;
     secondName?: string;
-    middleName?: string;
-    lastName: string;
+    firstLastName: string;
+    secondLastName?: string;
     idTypeId: number;
-    idNumber: BigInt;
+    idNumber: string;
     phone: BigInt;
     email: string;
     idType: Identification;
