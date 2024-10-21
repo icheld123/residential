@@ -25,6 +25,7 @@
     "@ng-select/ng-select": "^13.9.1",
     "angular-dropdown-search": "^1.0.2",
     "bootstrap": "^5.3.3",
+    "ng-angular-popup": "^0.6.2",
     "ngx-webcam": "^0.4.1",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",

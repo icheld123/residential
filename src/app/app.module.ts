@@ -7,6 +7,7 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { NgToastModule } from 'ng-angular-popup'
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -37,6 +38,7 @@ import { NgOptionHighlightModule } from '@ng-select/ng-option-highlight';
     MatFormFieldModule,
     MatInputModule,
     BrowserAnimationsModule,
+    NgToastModule
   ],
   providers: [],
   bootstrap: [AppComponent]
