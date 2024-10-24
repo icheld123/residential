@@ -4,16 +4,18 @@ import { ReactiveFormsModule } from "@angular/forms";
 import { NgOptionHighlightModule } from "@ng-select/ng-option-highlight";
 import { NgSelectModule } from "@ng-select/ng-select";
 import { NgToastModule } from "ng-angular-popup";
+import { ShowDatePipe } from "./directives/pipes/show-date.pipe";
 
 
 @NgModule({
-    declarations: [],
+    declarations: [ShowDatePipe],
     exports: [
         ReactiveFormsModule,
         CommonModule,
         NgSelectModule,
         NgOptionHighlightModule,
-        NgToastModule
+        NgToastModule,
+        ShowDatePipe
       ],
     imports: [
         ReactiveFormsModule,
@@ -21,6 +23,7 @@ import { NgToastModule } from "ng-angular-popup";
         NgSelectModule,
         NgOptionHighlightModule,
         NgToastModule
+        
     ],
     providers: [],
     bootstrap: []

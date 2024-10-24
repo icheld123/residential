@@ -10,12 +10,14 @@ import { SidebarComponent } from './core/components/sidebar/sidebar.component';
 import { HomeComponent } from './feature/home/home.component';
 import { DeliveryFormModule } from './feature/delivery/delivery-form.module';
 import { ReceptionFormModule } from './feature/reception-form/reception-form.module';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 @NgModule({
   declarations: [
     AppComponent,
     SidebarComponent,
-    HomeComponent  ],
+    HomeComponent
+    ],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -23,7 +25,8 @@ import { ReceptionFormModule } from './feature/reception-form/reception-form.mod
     HttpClientModule,
     BrowserAnimationsModule,
     DeliveryFormModule,
-    ReceptionFormModule
+    ReceptionFormModule,
+    NgxPaginationModule
   ],
   providers: [],
   bootstrap: [AppComponent]

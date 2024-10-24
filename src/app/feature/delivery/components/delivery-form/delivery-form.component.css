@@ -1,0 +1,16 @@
+.form-group{
+    margin: 1em;
+}
+.mensaje-error{
+    text-align: right;
+    font-size: 0.8rem;
+    color: red;
+  }
+  
+  .is-valid{
+  border: solid 2px green;
+  }
+  
+  .is-invalid{
+  border: solid 2px red;
+  }

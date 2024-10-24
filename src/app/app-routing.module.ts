@@ -11,7 +11,7 @@ const routes: Routes = [
         (mod) => mod.ReceptionFormModule
       ),
    },
-  { path: 'registro-entrega',
+  { path: 'paquetes',
     loadChildren: () =>
       import('./feature/delivery/delivery-form.module').then(
         (mod) => mod.DeliveryFormModule

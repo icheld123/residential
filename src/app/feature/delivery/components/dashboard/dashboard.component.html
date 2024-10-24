@@ -1,0 +1,29 @@
+<h2 class="text-center mt-4 mb-2 text-uppercase">PAQUETES REGISTRADOS</h2>
+<div class="table-responsive m-auto rounded bg-light">
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col" *ngFor="let item of tableHeaders">{{item}}</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let package of packages | paginate: { itemsPerPage: packagesPerPages, currentPage: currentPage, totalItems: totalPackages }">
+            <th scope="row">{{package.id}}</th>
+            <td>{{package.company}}</td>
+            <td>{{package.receptionDate | showDate: 'YYYY/MM/DD'}}</td>
+            <td>{{package.sector}}</td>
+            <td>{{package.unit}}</td>
+            <td>{{package.destinatary.firstName}} {{package.destinatary.firstLastName}} {{package.destinatary.secondLastName}}</td>
+            <td>{{package.state}}</td>
+            <td><button class="btn btn-success m-2" (click)="deliverPackage(package.id)">ENTREGAR</button></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<pagination-controls class="m-5 text-center d-block"
+    (pageChange)="onPageChange($event)"
+    [autoHide]="false"
+    previousLabel="Atrás"
+    nextLabel="Siguiente">
+</pagination-controls>
+<router-outlet></router-outlet>
